@@ -1,3 +1,4 @@
+﻿#pragma once
 #ifndef MATRIX_H
 #define MATRIX_H
 
@@ -6,25 +7,27 @@
 class Matrix {
 private:
     int** data;
-    unsigned int m;
-    unsigned int n;
+    unsigned int m, n;
 
 public:
-    Matrix(unsigned int m, unsigned int n);
-    ~Matrix();
+    Matrix(unsigned int rows, unsigned int columns); 
+    ~Matrix(); 
 
-    int* operator[](unsigned int index) const;
+    int* operator[](unsigned int i); 
 
     void fillRandom();
 
-    friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
-    Matrix operator+=(const Matrix& matrix);
-    Matrix operator+(const Matrix& matrix);
-    Matrix operator-=(const Matrix& matrix);
-    Matrix operator-(const Matrix& matrix);
-    Matrix operator*(const Matrix& matrix);
-    bool operator!=(const Matrix& matrix);
-    bool operator==(const Matrix& matrix);
+    Matrix operator+(const Matrix& other);
+    Matrix operator-(const Matrix& other);
+    Matrix operator*(const Matrix& other);
+
+    Matrix& operator+=(const Matrix& other);
+    Matrix& operator-=(const Matrix& other);
+
+    bool operator==(const Matrix& other);
+    bool operator!=(const Matrix& other);
+
+    friend std::ostream& operator<<(std::ostream& out, const Matrix& matrix); 
 };
 
-#endif //MATRIX_H
+#endif
