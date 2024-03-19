@@ -1,26 +1,26 @@
-﻿#include "matrix.h"
+#include "matrix.h"
 #include <cstdlib>
 
 
-Matrix::Matrix(unsigned int rows, unsigned int columns) : m(rows), n(columns) {
+Matrix::Matrix(unsigned int rows, unsigned int columns) : m(rows), n(columns) {  //конструктор, инициализирует новый обЪект матрицы, класс предсталяет матрицу с базовыми операциями + - *
     data = new int* [m];
     for (unsigned int i = 0; i < m; ++i) {
-        data[i] = new int[n];
+        data[i] = new int[n];                                                    // двумерный массив data
     }
 }
 
-Matrix::~Matrix() {
-    for (unsigned int i = 0; i < m; ++i) {
+Matrix::~Matrix() {                                                            //деструктор, удаляет объект матрицы, освобождает память, перебирает все строки матрицы и освобождает память для каждой строки, 
+    for (unsigned int i = 0; i < m; ++i) {                                     //затем удаляет указатели строки и освобождает память для указателей строк
         delete[] data[i];
     }
     delete[] data;
 }
 
-int* Matrix::operator[](unsigned int i) {
+int* Matrix::operator[](unsigned int i) {                                     //оператор [], который позволяет получить доступ к строке матрицы по заданному индексу
     return data[i];
 }
 
-void Matrix::fillRandom() {
+void Matrix::fillRandom() {                                            //метод, который заполняет матрицу случайными значениями
     for (unsigned int i = 0; i < m; ++i) {
         for (unsigned int j = 0; j < n; ++j) {
             data[i][j] = rand() % 10;
@@ -70,7 +70,7 @@ Matrix Matrix::operator*(const Matrix& other) {
     else std::cout << "The number of columns of Matrix 1 does not match the number of rows of Matrix 2! \n";
 }
 
-Matrix& Matrix::operator+=(const Matrix& other) {
+Matrix& Matrix::operator+=(const Matrix& other) {  //для добавления другой матрицы
     if (m == other.m || n == other.n) {
         for (unsigned int i = 0; i < m; ++i) {
             for (unsigned int j = 0; j < n; ++j) {
@@ -82,7 +82,7 @@ Matrix& Matrix::operator+=(const Matrix& other) {
     else std::cout << "Matrix dimensions do not match! \n";
 }
 
-Matrix& Matrix::operator-=(const Matrix& other) {
+Matrix& Matrix::operator-=(const Matrix& other) {  //для вычитания другой матрицы из текущей
     if (m == other.m || n == other.n) {
         for (unsigned int i = 0; i < m; ++i) {
             for (unsigned int j = 0; j < n; ++j) {
@@ -94,7 +94,7 @@ Matrix& Matrix::operator-=(const Matrix& other) {
     else std::cout << "Matrix dimensions do not match! \n";
 }
 
-bool Matrix::operator==(const Matrix& other) {
+bool Matrix::operator==(const Matrix& other) {  //для сравнения матриц на равенство
     if (m != other.m || n != other.n) {
         return false;
     }
@@ -109,11 +109,11 @@ bool Matrix::operator==(const Matrix& other) {
     return true;
 }
 
-bool Matrix::operator!=(const Matrix& other) {
+bool Matrix::operator!=(const Matrix& other) {  //для сравнения матриц на неравенство
     return !(*this == other);
 }
 
-std::ostream& operator<<(std::ostream& out, const Matrix& matrix) {
+std::ostream& operator<<(std::ostream& out, const Matrix& matrix) {  //оператор вывода в поток, для красивого вывода
     for (unsigned int i = 0; i < matrix.m; ++i) {
         for (unsigned int j = 0; j < matrix.n; ++j) {
             out << matrix.data[i][j] << " ";
